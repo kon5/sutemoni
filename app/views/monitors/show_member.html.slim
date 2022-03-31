@@ -1,0 +1,19 @@
+h1 状態一覧 (#{@member.name}さん)
+
+.nav.justify-content-end
+  = link_to '一覧へ', {controller: :monitors, action: :show, group_id: params[:group_id]}, class: 'nav-link'
+
+- if guest?
+  p ＊ゲストが作成した状態データは、一定時間経過すると消去されます。
+
+.mb-1
+table.table.table-hover
+  thead.thead-default
+    tr
+      th= State.human_attribute_name(:status)
+      th= State.human_attribute_name(:created_at)
+  tbody
+    - @states.each do |state|
+      tr
+        td= state.status
+        td= l state.created_at

@@ -1,0 +1,14 @@
+h1 グループの詳細
+
+.nav.justify-content-end
+  = link_to '一覧へ', groups_path, class: 'nav-link'
+
+h6 グループの#{Group.human_attribute_name(:name)} 「#{@group.name}」, グループのID 「#{@group.id}」, あなたのID 「#{@current_user.id}」
+
+= link_to 'グループメンバーの表示', { controller: :gr_members, action: :index, group_id: @group.id }, class: 'btn btn-primary'
+
+- if @group.maker_id == current_user.id || current_user.admin?
+  p
+  = link_to 'グループ名の編集', edit_group_path(@group), class: 'btn btn-primary m-1'
+  p
+  = link_to 'グループの削除', @group, method: :delete, data: { confirm: "グループ「#{@group.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger m-1'

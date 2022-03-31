@@ -1,0 +1,30 @@
+h1 状態の新規登録
+
+.nav.justify-content-end
+  = link_to '一覧へ', states_path, class: 'nav-link'
+
+- if @state.errors.present?
+  ul#error_explanation
+    - @state.errors.full_messages.each do |message|
+      li= message
+
+p ＊今の状態を下に入力するか、選択肢から選んで「登録する」ボタンを押して下さい
+
+= form_with model: @state, local: true do |f|
+  = f.submit nil, class: 'btn btn-primary m-1'
+
+  .form-group
+    = f.label :status
+    = f.text_field :status, class: 'form-control', id: 'state_status'
+    p
+    p
+  .form-group
+    = f.radio_button :state, "", id: 'preset_state', checked: true
+    = f.label '(直接入力)'
+    p
+    - @preset_states.each do |preset_state|
+      = f.radio_button :state, preset_state.state, id: 'preset_state'
+      = f.label preset_state.state
+      p
+
+  = f.submit nil, class: 'btn btn-primary m-1'

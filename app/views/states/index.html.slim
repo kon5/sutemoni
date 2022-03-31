@@ -1,0 +1,47 @@
+h1 状態一覧
+
+- if guest?
+  p ＊下の「新規登録」を押して、今の状態を入れてみて下さい
+
+= link_to '新規登録', new_state_path, class: 'btn btn-primary'
+
+- if guest?
+  p
+  p ＊ゲストが作成した状態データは、一定時間経過すると消去されます。
+
+.mb-1
+table.table.table-hover
+  thead.thead-default
+    tr
+      th= State.human_attribute_name(:status)
+      /th= State.human_attribute_name(:private)
+      th= State.human_attribute_name(:created_at)
+      th
+  tbody
+    - @states.each do |state|
+      tr
+        td= link_to state.status, state
+        /td= state.private ? 'Yes' : "No"
+        td= l state.created_at
+        td
+          = link_to '編集', edit_state_path(state), class: 'btn btn-primary m-1'
+          = link_to '削除', state, method: :delete, data: { confirm: "状態「#{state.status}」を削除します。よろしいですか？" }, class: 'btn btn-danger m-1'
+
+- if current_user.admin?
+  .mb-1
+  table.table.table-hover
+    thead.thead-default
+      tr
+        th= State.human_attribute_name(:status)
+        th= State.human_attribute_name(:user_id)
+        th= User.human_attribute_name(:name)
+        th= State.human_attribute_name(:private)
+        th= State.human_attribute_name(:created_at)
+    tbody
+      - @states_all.each do |state|
+        tr
+          td= link_to state.status, state
+          td= state.user_id
+          td= User.find(state.user_id).name
+          td= state.private ? 'Yes' : "No"
+          td= l state.created_at

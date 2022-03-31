@@ -1,0 +1,5 @@
+class ChangeStatesStatusNotNull < ActiveRecord::Migration[5.2]
+  def change
+    change_column_null :states, :status, false
+  end
+end

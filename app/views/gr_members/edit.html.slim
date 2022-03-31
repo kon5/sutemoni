@@ -1,0 +1,24 @@
+h1 グループメンバーの登録
+
+h4 GrMembers#edit
+p Find me in app/views/gr_members/edit.html.slim
+
+p メアドを入れて登録。存在しない場合は警告を出す。
+
+p メアド→User検索→存在すればID取得→GRとuserのIDでgroup_userに登録
+
+h6= p "グループの#{Group.human_attribute_name(:name)} #{@group.name}"
+
+h6= p "グループの作成者 #{User.find(@group_maker_id).name}"
+
+
+- if @group_user.errors.present?
+  ul#error_explanation
+    - @group_user.errors.full_messages.each do |message|
+      li= message
+
+= form_with url: { controller: :gr_members, action: :edit, group_id: @group.id }, method: :post, local: true do |f|
+  .form-group
+    = f.label :email, 'メールアドレス'
+    = f.text_field :email, class: 'form-control'
+  = f.submit '登録する', class: 'btn btn-primary m-1'

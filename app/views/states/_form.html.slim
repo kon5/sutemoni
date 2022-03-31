@@ -1,0 +1,14 @@
+- if state.errors.present?
+  ul#error_explanation
+    - state.errors.full_messages.each do |message|
+      li= message
+
+= form_with model: state, local: true do |f|
+  .form-group
+    = f.label :status
+    = f.text_field :status, class: 'form-control', id: 'state_status'
+  /.form-group.my-3
+    = f.label :private, class: 'form-check-label' do
+      = f.check_box :private, class: 'form-check-input'
+      | 非公開
+  = f.submit nil, class: 'btn btn-primary m-1'

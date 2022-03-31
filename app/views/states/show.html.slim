@@ -1,0 +1,26 @@
+h1 状態の詳細
+
+.nav.justify-content-end
+  = link_to '一覧へ', states_path, class: 'nav-link'
+
+.mb-1
+table.table.table-hover
+  tbody
+    tr
+      th= State.human_attribute_name(:id)
+      td= @state.id
+    tr
+      th= State.human_attribute_name(:status)
+      td= @state.status
+    /tr
+      th= State.human_attribute_name(:private)
+      td= @state.private ? 'Yes' : "No"
+    tr
+      th= State.human_attribute_name(:created_at)
+      td= @state.created_at
+    tr
+      th= State.human_attribute_name(:updated_at)
+      td= @state.updated_at
+
+= link_to '編集', edit_state_path, class: 'btn btn-primary m-1'
+= link_to '削除', @state, method: :delete, data: { confirm: "状態「#{@state.status}」を削除します。よろしいですか？" }, class: 'btn btn-danger m-1'

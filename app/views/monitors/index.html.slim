@@ -1,0 +1,14 @@
+h1 ホーム画面
+
+- unless guest?
+  p ＊ここは「非ゲスト」時の表示です。
+
+- if guest?
+  h2 ようこそ
+  h3 ステモニは見守り系のＷｅｂアプリです。
+  p 離れた家族などの様子をそっと確認することができます。
+  p 各々が自分の状態を入力する必要がありますが、好きなときに同一グループの人の様子を知ることができます。
+
+= link_to 'グループを見る', groups_path, class: 'btn btn-primary'
+p
+= link_to '自分の状態の一覧を見る', states_path, class: 'btn btn-primary'

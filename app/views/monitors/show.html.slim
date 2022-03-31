@@ -1,0 +1,26 @@
+h1 状態モニター
+h5 グループ名： 「#{@group_users.first.group.name}」
+p #{l Time.zone.now} の状態です
+
+= link_to '最新情報に更新', 'javascript:void(0);', onclick: "window.location.reload();", class: "btn btn-primary m-1"
+
+- if guest?
+  p ＊グループの各人の最新の状態を１件ずつ表示しています
+
+p ＊名前をクリックすると、その人の過去状態一覧に飛びます
+
+.mb-1
+table.table.table-hover
+  thead.thead-default
+    tr
+      th= State.human_attribute_name(:status)
+      th= User.human_attribute_name(:id)
+      th= User.human_attribute_name(:name)
+      th= State.human_attribute_name(:created_at)
+  tbody
+    - @states.each do |time, state|
+      tr
+        td= state.status
+        td= state.user_id
+        td= link_to User.find(state.user_id).name, {controller: :monitors, action: :show_member , group_id: params[:group_id], member_id: state.user_id}
+        td= l state.created_at

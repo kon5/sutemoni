@@ -1,0 +1,43 @@
+h1 グループメンバー 一覧
+
+.nav.justify-content-end
+  = link_to 'グループの詳細へ戻る', group_path(params[:group_id]), class: 'nav-link'
+
+- if @group.maker_id == current_user.id || current_user.admin?
+  = link_to 'メンバーの登録', { controller: :gr_members, action: :edit, group_id: @group.id }, class: 'btn btn-primary'
+  p
+
+h5 グループの#{Group.human_attribute_name(:name)} 「#{@group.name}」
+
+h6= p "(グループID) #{@group.id}, (グループ作成者) #{User.find(@group_maker_id).name}, (あなたのユーザーID) #{@current_user.id}"
+
+- if guest?
+  p ＊メンバーを追加、削除できるのはグループ作成者のみです
+- else
+  p 一覧の表示項目を増やす、中間テーブルを使ったやつとか
+  p 作成者のみメンバーを追加、削除できるようにする
+  p 但し、作成者本人の削除は不可。その場合はグループそのものを削除して下さい。
+
+= link_to '状態モニタへ', { controller: :monitors, action: :show, group_id: @group.id}, class: 'btn btn-primary m-1'
+
+.mb-3
+table.table.table-hover
+  thead.thead-default
+    tr
+      th= User.human_attribute_name(:id)
+      th= User.human_attribute_name(:name)
+      th= User.human_attribute_name(:email)
+      th= GroupUser.human_attribute_name(:created_at)
+      /th= GroupUser.human_attribute_name(:updated_at)
+      - if @group.maker_id == current_user.id || current_user.admin?
+        th
+  tbody
+    - @group_users.each do |group_user|
+      tr
+        td= group_user.user_id
+        td= group_user.user.name
+        td= group_user.user.email
+        td= l group_user.created_at
+        /td= l group_user.updated_at
+        - if @group.maker_id == current_user.id || current_user.admin?
+          td= link_to '削除', { controller: :gr_members, action: :destroy, group_id: @group.id, member_id: group_user.user_id }, method: :delete, data: { confirm: "メンバー「#{group_user.user.name}」を削除します。よろしいですか？" }, class: 'btn btn-danger m-1'
