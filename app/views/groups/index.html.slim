@@ -2,8 +2,8 @@ h1 所属グループ一覧
 
 - if guest?
   p ＊ゲストはグループを作れません
-  p ＊グループ名クリックで詳細画面に移動します
   p ＊「状態モニタ」ボタンを押すと、そのグループメンバー全員の状態を見られます
+  p ＊グループ名クリックで詳細画面に移動します
 - else
   p
   = link_to 'グループ新規登録', new_group_path, class: 'btn btn-primary m-1'
@@ -15,24 +15,24 @@ table.table.table-hover
   thead.thead-default
     tr
       th= Group.human_attribute_name(:id)
+      th
       th= Group.human_attribute_name(:name)
       th= Group.human_attribute_name(:maker_id)
       th= User.human_attribute_name(:name)
       th= User.human_attribute_name(:email)
       th= Group.human_attribute_name(:created_at)
       /th= Group.human_attribute_name(:updated_at)
-      th
   tbody
     - @groups.each do |group|
       tr
         td= group.id
+        td= link_to '状態モニタ', { controller: :monitors, action: :show, group_id: group.id}, class: 'btn btn-primary m-1'
         td= link_to group.name, group
         td= group.maker_id
         td= User.find(group.maker_id).name
         td= User.find(group.maker_id).email
         td= l group.created_at
         /td= l group.updated_at
-        td= link_to '状態モニタ', { controller: :monitors, action: :show, group_id: group.id}, class: 'btn btn-primary m-1'
 
 - if current_user.admin?
   p group_user

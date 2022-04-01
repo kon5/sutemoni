@@ -7,8 +7,15 @@ h1 ホーム画面
   h2 ようこそ
   h3 ステモニは見守り系のＷｅｂアプリです。
   p 離れた家族などの様子をそっと確認することができます。
-  p 各々が自分の状態を入力する必要がありますが、好きなときに同一グループの人の様子を知ることができます。
+  p 各々が自分の状態を入力する必要がありますが、好きなときに同一グループの人の様子を知ることができます（「状態モニター」）。
 
+h5 「状態モニター」へのリンク
+- @groups.each do |group|
+  = link_to group.name, { controller: :monitors, action: :show, group_id: group.id}, class: 'btn btn-primary m-1'
+
+p
+h5 「グループ」へのリンク
 = link_to 'グループを見る', groups_path, class: 'btn btn-primary'
 p
+h5 自分の「状態」へのリンク
 = link_to '自分の状態の一覧を見る', states_path, class: 'btn btn-primary'

@@ -33,7 +33,8 @@ class StatesController < ApplicationController
     end
 
     if flag && @state.save
-      redirect_to @state, notice: "状態「#{@state.status}」を登録しました。"
+      #redirect_to @state, notice: "状態「#{@state.status}」を登録しました。"
+      redirect_to states_path, notice: "状態「#{@state.status}」を登録しました。"
     else
       render :new
     end

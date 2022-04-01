@@ -2,7 +2,7 @@ class MonitorsController < ApplicationController
   before_action :group_kakunin, only: [:show, :show_member]
 
   def index
-
+    @groups = current_user.groups.recent
   end
 
   def show
