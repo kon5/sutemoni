@@ -15,12 +15,12 @@ html
       ul.navbar-nav.ml-auto
         - if current_user
           li.nav-item= link_to 'ホーム', root_path, class: 'nav-link'
-          li.nav-item= link_to '状態', states_path, class: 'nav-link'
+          /li.nav-item= link_to '状態', states_path, class: 'nav-link'
           - if current_user.admin?
             li.nav-item= link_to 'ユーザー一覧', admin_users_path, class: 'nav-link'
 
-          li.nav-item= link_to 'グループ', groups_path, class: 'nav-link'
-          li.nav-item= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link'
+          /li.nav-item= link_to 'グループ', groups_path, class: 'nav-link'
+          li.nav-item= link_to 'ログアウト', logout_path, method: :delete, data: { confirm: "ログアウトします。よろしいですか？" }, class: 'nav-link'
           li.navbar-brand= current_user.name
 
         - else

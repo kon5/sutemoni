@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
 
   root to: 'monitors#index'
+  get '/states/:group_id/new2', to: 'states#new2'
   resources :states
 
   get '/monitors/:group_id', to: 'monitors#show'

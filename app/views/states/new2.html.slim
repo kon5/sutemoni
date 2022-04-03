@@ -1,6 +1,6 @@
 h1 状態の新規登録
 
 .nav.justify-content-end
-  = link_to '一覧へ', states_path, class: 'nav-link'
+  = link_to '状態モニタへ', { controller: :monitors, action: :show, group_id: params[:group_id]}, class: 'nav-link'
 
 = render partial: 'form_new', locals: { state: @state, preset_states: @preset_states }

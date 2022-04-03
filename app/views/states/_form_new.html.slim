@@ -1,0 +1,26 @@
+- if state.errors.present?
+  ul#error_explanation
+    - state.errors.full_messages.each do |message|
+      li= message
+
+p ＊今の状態を選択肢から選ぶか、下の入力欄に直接入れて「登録する」ボタンを押して下さい
+
+= form_with model: state, local: true do |f|
+  = f.submit nil, class: 'btn btn-primary m-1'
+
+  .form-group
+    - preset_states.each do |preset_state|
+      = f.radio_button :state, preset_state.state, id: 'preset_state'
+      = f.label preset_state.state
+      p
+    = f.radio_button :state, "", id: 'preset_state', checked: true
+    = f.label '(直接入力)'
+  .form-group
+    = f.label :status
+    = f.text_field :status, class: 'form-control', id: 'state_status'
+    p
+    p
+    - if params[:group_id]
+      = f.hidden_field :group_id, value: params[:group_id]
+
+  = f.submit nil, class: 'btn btn-primary m-1'

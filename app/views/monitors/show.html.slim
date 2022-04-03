@@ -1,4 +1,8 @@
 h1 状態モニター
+
+.nav.justify-content-end
+  = link_to 'グループ一覧へ', groups_path, class: 'nav-link'
+
 h5 グループ名： 「#{@group_users.first.group.name}」
 p #{l Time.zone.now} の状態です
 
@@ -14,13 +18,26 @@ table.table.table-hover
   thead.thead-default
     tr
       th= State.human_attribute_name(:status)
-      th= User.human_attribute_name(:id)
+      /th= User.human_attribute_name(:id)
       th= User.human_attribute_name(:name)
       th= State.human_attribute_name(:created_at)
   tbody
     - @states.each do |time, state|
       tr
         td= state.status
-        td= state.user_id
+        /td= state.user_id
         td= link_to User.find(state.user_id).name, {controller: :monitors, action: :show_member , group_id: params[:group_id], member_id: state.user_id}
         td= l state.created_at
+
+- if guest?
+  p ＊↓自分の今の「状態」を入力するのはこちら
+
+= link_to '状態を新規登録する', {controller: :states, action: :new2, group_id: params[:group_id]}, class: 'btn btn-primary'
+p
+p
+
+- if guest?
+  p ＊↓自分の「状態」を修正・削除するのはこちら
+
+= link_to '自分の状態一覧', states_path, class: 'btn btn-primary'
+p

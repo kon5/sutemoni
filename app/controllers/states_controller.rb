@@ -14,6 +14,8 @@ class StatesController < ApplicationController
     @preset_states = PresetState.all
   end
 
+  alias new2 new
+
   def edit
   end
 
@@ -33,8 +35,14 @@ class StatesController < ApplicationController
     end
 
     if flag && @state.save
-      #redirect_to @state, notice: "状態「#{@state.status}」を登録しました。"
-      redirect_to states_path, notice: "状態「#{@state.status}」を登録しました。"
+      kakushi = params.require(:state).permit(:group_id)
+
+      if kakushi[:group_id].nil? # 無ければ状態一覧に、有ればモニタにリダイレクト
+        redirect_to states_path, notice: "状態「#{@state.status}」を登録しました。"
+      else
+        flash[:notice] = "状態「#{@state.status}」を登録しました。"
+        redirect_to controller: :monitors, action: :show, group_id: kakushi[:group_id]
+      end
     else
       render :new
     end
